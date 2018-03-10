@@ -5,11 +5,7 @@ import VueResource from 'vue-resource'
 
 import App from './src/App'
 
-import { sync } from 'vuex-router-sync'
-// import router from './src/router'
 import store from './src/store'
-
-const unsync = sync(store)
 
 Vue.use(VueResource)
 
@@ -28,9 +24,6 @@ lsv("<%= interactive_id %>", function (interactive) {
     template: '<App />',
     components: {
       App
-    },
-    destroyed () {
-      unsync()
     }
   })
 
