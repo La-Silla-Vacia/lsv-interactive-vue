@@ -1,7 +1,4 @@
 (function () {
-  // base CSS file
-  require("./src/interactive.css");
-
   function onDocumentReady(fn) {
     // Check to see if the body is ready. If not, try again in 100ms.
     var stateCheck = setInterval(function () {

@@ -1,0 +1,15 @@
+$tablet: 960px;
+$phone: 480px;
+
+$font-size: 18px;
+$font-color: black;
+$line-height: 1.65;
+
+$max-width: 1920px;
+$max-content-width: 82rem;
+$max-content-width--compact: 54rem;
+
+$content-padding--top: 4vh;
+
+@import "colors";
+@import "fonts";

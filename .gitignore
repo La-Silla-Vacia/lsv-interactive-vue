@@ -15,6 +15,9 @@ results
 
 npm-debug.log
 node_modules
+prototype/node_modules
+prototype/yarn.lock
 script.js
+styles.css
 
 test

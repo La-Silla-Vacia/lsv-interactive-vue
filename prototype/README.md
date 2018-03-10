@@ -5,7 +5,7 @@ Source files for <%= interactive_id %>
 
 [You can find a preview of '<%= interactive_id %>' here](https://la-silla-vacia.github.io/<%= interactive_id %>)
 
-![](https://raw.githubusercontent.com/la-silla-vacia/<%= interactive_id %>/master/screenshot.png)
+![](https://raw.githubusercontent.com/la-silla-vacia/<%= interactive_id %>/master/dev/screenshot.png)
 
 ## Data
 Please link to any external data used, as well as scripts for cleaning and analyzing that data, all of which should live in the `/data` directory.
@@ -43,6 +43,7 @@ window.<%= interactive_id %>_data = {
 <img src="https://raw.githubusercontent.com/la-silla-vacia/lsv-interactive/master/misc/lsvi-loading.gif"
      alt="Interactive is loading" style="width:100%;max-width: 320px;margin: 4em auto;display: block;">
 </div>
+<link type="text/css" rel="stylesheet" href="https://la-silla-vacia.github.io/<%= interactive_id %>/styles.css" />
 <script defer type="text/javascript" src="https://la-silla-vacia.github.io/<%= interactive_id %>/script.js"></script>
 <!-- END OF OUR INTERACTIE -->
 ```

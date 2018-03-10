@@ -154,16 +154,15 @@ if (args._.length > 1) {
 }
 
 
-var index = _.template(fs.readFileSync(__dirname + "/../prototype/index.html", "utf8")),
-  debug = _.template(fs.readFileSync(__dirname + "/../prototype/debug.js", "utf8")),
-  styles = _.template(fs.readFileSync(__dirname + "/../prototype/src/base.css", "utf8")),
-  baseJs = _.template(fs.readFileSync(__dirname + "/../prototype/src/base.jsx", "utf8")),
-  globalStyles = _.template(fs.readFileSync(__dirname + "/../prototype/src/global.css", "utf8")),
+var index = _.template(fs.readFileSync(__dirname + "/../prototype/dev/index.html", "utf8")),
+  start = _.template(fs.readFileSync(__dirname + "/../prototype/start.js", "utf8")),
+  app = _.template(fs.readFileSync(__dirname + "/../prototype/src/App.vue", "utf8")),
   pkg = _.template(fs.readFileSync(__dirname + "/../prototype/package.json", "utf8")),
   interactiveData = _.template(fs.readFileSync(__dirname + "/../prototype/data/data.json", "utf8")),
   readme = _.template(fs.readFileSync(__dirname + "/../prototype/README.md", "utf8")),
-  postcssConfig = _.template(fs.readFileSync(__dirname + "/../prototype/postcss.config.js", "utf8")),
-  getDataScript = _.template(fs.readFileSync(__dirname + "/../prototype/src/Scripts/getData.js", "utf8"));
+  babelrc = _.template(fs.readFileSync(__dirname + "/../prototype/babelrc", "utf8")),
+  editorconfig = _.template(fs.readFileSync(__dirname + "/../prototype/editorconfig", "utf8")),
+  eslintrc = _.template(fs.readFileSync(__dirname + "/../prototype/eslintrc", "utf8"));
 
 
 function create() {
@@ -173,42 +172,44 @@ function create() {
   }
 
   mkdirp(path, function () {
-    fs.writeFileSync(path + "/index.html", index(data));
-    fs.writeFileSync(path + "/debug.js", debug(data));
+    fs.writeFileSync(path + "/start.js", start(data));
     fs.writeFileSync(path + "/package.json", pkg(data));
     fs.writeFileSync(path + "/README.md", readme(data));
-    fs.writeFileSync(path + "/postcss.config.js", postcssConfig(data));
+
+    fs.writeFileSync(path + "/.babelrc", babelrc());
+    fs.writeFileSync(path + "/.editorconfig", editorconfig());
+    fs.writeFileSync(path + "/.eslintrc", eslintrc());
 
     mkdirp(path + "/dist", function () {
       fs.closeSync(fs.openSync(path + "/dist/.gitkeep", 'w'));
     });
 
-    mkdirp(path + "/src", function () {
-      fs.writeFileSync(path + "/src/base.css", styles(data));
-      fs.writeFileSync(path + "/src/global.css", globalStyles(data));
-      fs.writeFileSync(path + "/src/base.jsx", baseJs(data));
+    mkdirp(path + "/dev", function () {
+      fs.closeSync(fs.openSync(path + "/dev/.gitkeep", 'w'));
+      fs.writeFileSync(path + "/dev/index.html", index(data));
+      fs.closeSync(fs.openSync(path + "/dev/screenshot.png", 'w'));
     });
 
-    mkdirp(path + "/webpack", function () {
-      ncp(__dirname + "/../prototype/webpack/dev.config.js", path + "/webpack/dev.config.js", function (err) {
-        if (err) {
-          return console.error(err);
-        }
-      });
+    mkdirp(path + "/src", function () {
+      fs.writeFileSync(path + "/src/App.vue", app(data));
+    });
 
-      ncp(__dirname + "/../prototype/webpack/production.config.js", path + "/webpack/production.config.js", function (err) {
-        if (err) {
-          return console.error(err);
-        }
-      });
+    fs.closeSync(fs.openSync(path + "/webpack.config.js", 'w'));
+
+    mkdirp(path + "/src/assets", function() {
+      ncp(__dirname + "/../prototype/src/assets/", path + "/src/assets");
+    });
+
+    mkdirp(path + "/src/store", function() {
+      ncp(__dirname + "/../prototype/src/store/", path + "/src/store");
+    });
+
+    mkdirp(path + "/src/util", function() {
+      ncp(__dirname + "/../prototype/src/util/", path + "/src/util");
     });
 
     mkdirp(path + "/src/Components", function() {
       ncp(__dirname + "/../prototype/src/Components/", path + "/src/Components");
-    });
-
-    mkdirp(path + "/src/Scripts", function() {
-      fs.writeFileSync(path + "/src/Scripts/getData.js", getDataScript(data));
     });
 
     mkdirp(path + "/data", function (err) {
@@ -219,12 +220,6 @@ function create() {
     });
 
     ncp(__dirname + "/../prototype/gitignore", path + "/.gitignore", function (err) {
-      if (err) {
-        return console.error(err);
-      }
-    });
-
-    ncp(__dirname + "/../prototype/screenshot.png", path + "/screenshot.png", function (err) {
       if (err) {
         return console.error(err);
       }
