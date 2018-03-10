@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.container, {[$style.loading]: loading}]" id="app">
+  <div :class="[$style.container, {[$style.loading]: loading}]">
     <LoadScreen v-if="loading" />
     <div v-else :class="$style.inner">
       <h2 :class="$style.title">Hello <%= interactive_id %>!</h2>
@@ -116,16 +116,13 @@
 </style>
 
 <style module lang="scss">
+  @import './assets/styles/base';
   .container {
-    font-family: map(fonts, family-sans);
+    font-family: $font__family--sans;
     font-size: 16px;
-    background-color: map(colors, neutral, lightest);
+    background-color: $color__neutral--lightest;
     transition: .2s;
     display: block;
-  }
-
-  .inner {
-    clear: fix-legacy;
   }
 
   .title {

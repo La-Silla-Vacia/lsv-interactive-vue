@@ -1,5 +1,5 @@
 /*global require,console*/
-var lsv = require('lsv-interactive');
+var lsv = require('lsv-interactive-vue');
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
@@ -9,14 +9,11 @@ import { sync } from 'vuex-router-sync'
 // import router from './src/router'
 import store from './src/store'
 
-// const unsync = sync(store, router)
+const unsync = sync(store)
 
 Vue.use(VueResource)
 
-// require("./src/base.css"); // this goes outside the callback since otherwise the interactive sometimes fires before the CSS is fully loaded
-// require("./src/global.css");
-
-lsv("ccc", function (interactive) {
+lsv("<%= interactive_id %>", function (interactive) {
   "use strict";
 
   if (!interactive) {
@@ -31,6 +28,9 @@ lsv("ccc", function (interactive) {
     template: '<App />',
     components: {
       App
+    },
+    destroyed () {
+      unsync()
     }
   })
 

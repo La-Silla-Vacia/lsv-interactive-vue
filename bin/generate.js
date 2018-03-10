@@ -162,7 +162,8 @@ var index = _.template(fs.readFileSync(__dirname + "/../prototype/dev/index.html
   readme = _.template(fs.readFileSync(__dirname + "/../prototype/README.md", "utf8")),
   babelrc = _.template(fs.readFileSync(__dirname + "/../prototype/babelrc", "utf8")),
   editorconfig = _.template(fs.readFileSync(__dirname + "/../prototype/editorconfig", "utf8")),
-  eslintrc = _.template(fs.readFileSync(__dirname + "/../prototype/eslintrc", "utf8"));
+  eslintrc = _.template(fs.readFileSync(__dirname + "/../prototype/eslintrc", "utf8")),
+  webpackConfig = _.template(fs.readFileSync(__dirname + "/../prototype/webpack.config.js", "utf8"));
 
 
 function create() {
@@ -180,6 +181,8 @@ function create() {
     fs.writeFileSync(path + "/.editorconfig", editorconfig());
     fs.writeFileSync(path + "/.eslintrc", eslintrc());
 
+    fs.writeFileSync(path + "/webpack.config.js", webpackConfig());
+
     mkdirp(path + "/dist", function () {
       fs.closeSync(fs.openSync(path + "/dist/.gitkeep", 'w'));
     });
@@ -193,8 +196,6 @@ function create() {
     mkdirp(path + "/src", function () {
       fs.writeFileSync(path + "/src/App.vue", app(data));
     });
-
-    fs.closeSync(fs.openSync(path + "/webpack.config.js", 'w'));
 
     mkdirp(path + "/src/assets", function() {
       ncp(__dirname + "/../prototype/src/assets/", path + "/src/assets");
